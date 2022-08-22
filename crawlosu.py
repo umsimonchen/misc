@@ -44,7 +44,6 @@ def download(driver, beatmap_num, maps):
                         downloads[1].click()
                     if len(downloads) == 4:
                         downloads[1].click()
-                time.sleep(1) # avoid too many request 
             elif time.time() - start_time < 3:  # keep loading
                 continue
             else:
@@ -96,7 +95,7 @@ def main():  # first time run
         link = block.get_attribute('href')
         driver.switch_to.new_window('tab')
         driver.get(link)
-        time.sleep(1)
+        time.sleep(1)  # avoid too many request 
         strUrl = driver.current_url
         beatmap_num = int(strUrl.split('/')[4].split('#')[0])
         
