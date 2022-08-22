@@ -115,10 +115,11 @@ def recheck(maps):
     driver = setup(web_url)
     time.sleep(15)  # login
     
-    old_failed_beatmaps = maps['failed_beatmaps']
+	to_download = list(set(maps['total_beatmaps']) - set(maps['beatmaps']))
     maps['new_beatmaps'] = []
     maps['failed_beatmaps'] = []
-    for beatmap_num in old_failed_beatmaps:
+	maps['total_beatmaps'] = []
+    for beatmap_num in to_download:
         link = web_url+str(beatmap_num)
         driver.switch_to.new_window('tab')
         driver.get(link)
@@ -126,7 +127,9 @@ def recheck(maps):
         maps = download(driver, beatmap_num, maps)
         close(driver)
     
+	print('Total played songs: '+str(len(maps['total_beatmaps'])))
     print('Local songs: '+str(len(maps['beatmaps'])))
     print('Should download songs: '+str(len(maps['new_beatmaps'])))
     print('Failed songs: '+str(len(maps['failed_beatmaps'])))
-    
+		
+	return maps
